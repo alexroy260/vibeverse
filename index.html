@@ -1,8 +1,9 @@
+```html
 <!DOCTYPE html>
 <html lang="en" class="h-full">
 <head>
   <meta charset="UTF-8">
-  <script src="https://pl32293549.profitableratecpmnetwork.com/7b/d8/a8/7bd8a8a8a467f3f802163c087bc4b87d.js"></script>
+  https://www.profitableratecpmnetwork.com/tbdbd510gf?key=780373559c259f86b2a6942e80f6597e
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VibeVerse - Social Media Platform</title>
   <!-- Tailwind CSS -->
@@ -77,34 +78,17 @@
         </div>
 
         <!-- Header Controls & Auth -->
-        <div class="flex items-center space-x-2 sm:space-x-3">
-          <!-- Guide Button -->
-          <button onclick="openControlGuideModal()" title="How to Control Website" class="px-3 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white font-semibold text-xs flex items-center space-x-1.5 shadow transition">
-            <i class="fa-solid fa-circle-question"></i>
-            <span class="hidden sm:inline">Controls & Guide</span>
-          </button>
-
-          <!-- Host App Button -->
-          <button onclick="openHostingModal()" title="Host / Publish Website" class="px-3 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs flex items-center space-x-1.5 shadow transition">
-            <i class="fa-solid fa-cloud-arrow-up"></i>
-            <span class="hidden sm:inline">Host Live</span>
-          </button>
-
-          <!-- Go Pro Button -->
-          <button onclick="openSubModal()" class="px-3 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-xs flex items-center space-x-1 shadow transition">
-            <i class="fa-solid fa-crown text-xs"></i>
-            <span class="hidden sm:inline">Upgrade</span>
-          </button>
-
-          <!-- Auth Actions (Signed Out vs Signed In) -->
-          <div id="auth-buttons" class="flex items-center space-x-2">
-            <button onclick="openAuthModal('login')" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
-              Log In
-            </button>
-            <button onclick="openAuthModal('signup')" class="px-3 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow transition">
-              Sign Up
-            </button>
-          </div>
+<div class="flex items-center space-x-2 sm:space-x-3">
+    <!-- Dark Mode Toggle -->
+    <button id="themeToggleBtn" onclick="toggleDarkMode()" class="p-2 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 transition-colors">
+        <i id="themeToggleIcon" class="fa-solid fa-moon"></i>
+    </button>
+    <!-- Dynamic Auth Buttons Container -->
+    <div id="authHeaderNav" class="flex items-center space-x-2">
+        <button onclick="openModal('loginModal')" class="px-3 py-1.5 rounded-lg border border-slate-700 text-slate-300 hover:bg-slate-800 text-xs sm:text-sm font-medium transition-colors">Log In</button>
+        <button onclick="openModal('signupModal')" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-medium shadow-sm transition-colors">Sign Up</button>
+    </div>
+</div>
 
           <div id="user-profile-header" class="hidden flex items-center space-x-2 border-l border-slate-200 dark:border-slate-700 pl-3">
             <img id="header-avatar" src="https://placehold.co/100x100/6366f1/ffffff?text=User" alt="Avatar" class="w-8 h-8 rounded-full object-cover border border-indigo-500">
@@ -127,8 +111,8 @@
         <div id="profile-banner" class="h-16 -mx-5 -mt-5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mb-8"></div>
         <div class="relative inline-block -mt-16 mb-2">
           <img id="sidebar-avatar" src="https://placehold.co/100x100/6366f1/ffffff?text=You" alt="Profile Avatar" class="w-20 h-20 rounded-full border-4 border-white dark:border-slate-800 object-cover shadow-md mx-auto">
-          <span id="sub-badge" class="absolute bottom-0 right-0 bg-amber-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold shadow">
-            Free
+          <span id="sub-badge" class="absolute bottom-0 right-0 bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold shadow">
+            100% Free
           </span>
         </div>
         <h2 id="sidebar-name" class="font-bold text-slate-800 dark:text-slate-100 text-base">Alex Rivera</h2>
@@ -137,10 +121,10 @@
 
         <!-- Social Handles Badges -->
         <div id="social-links-container" class="flex justify-center space-x-3 mb-4">
-          <a id="fb-link" href="#" target="_blank" class="text-slate-400 hover:text-blue-600 text-sm hidden">
+          <a id="fb-link" href="#" target="_blank" class="text-slate-400 hover:text-blue-600 text-base transition-colors hidden" title="Facebook Profile">
             <i class="fa-brands fa-facebook"></i>
           </a>
-          <a id="ig-link" href="#" target="_blank" class="text-slate-400 hover:text-pink-600 text-sm hidden">
+          <a id="ig-link" href="#" target="_blank" class="text-slate-400 hover:text-pink-600 text-base transition-colors hidden" title="Instagram Profile">
             <i class="fa-brands fa-instagram"></i>
           </a>
         </div>
@@ -310,8 +294,8 @@
               <input type="text" id="edit-fb" placeholder="https://facebook.com/yourprofile" class="w-full p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs">
             </div>
             <div>
-              <label class="block font-semibold mb-1"><i class="fa-brands fa-instagram text-pink-600 mr-1"></i> Instagram Handle</label>
-              <input type="text" id="edit-ig" placeholder="@yourinstagram" class="w-full p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs">
+              <label class="block font-semibold mb-1"><i class="fa-brands fa-instagram text-pink-600 mr-1"></i> Instagram Handle / Link</label>
+              <input type="text" id="edit-ig" placeholder="https://instagram.com/yourusername" class="w-full p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs">
             </div>
           </div>
           <button onclick="saveProfile()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-xs shadow">
@@ -352,427 +336,4 @@
               <div>
                 <p class="font-bold text-xs leading-tight">Sophia Chen</p>
                 <p class="text-[10px] text-slate-400">@sophiamusic</p>
-              </div>
-            </div>
-            <button onclick="toggleFollow(this)" class="px-3 py-1 bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400 hover:bg-indigo-100 rounded-lg text-xs font-semibold">Follow</button>
-          </div>
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-              <img src="https://placehold.co/100x100/3b82f6/ffffff?text=M" class="w-8 h-8 rounded-full">
-              <div>
-                <p class="font-bold text-xs leading-tight">Marcus Vance</p>
-                <p class="text-[10px] text-slate-400">@marcus_v</p>
-              </div>
-            </div>
-            <button onclick="toggleFollow(this)" class="px-3 py-1 bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400 hover:bg-indigo-100 rounded-lg text-xs font-semibold">Follow</button>
-          </div>
-        </div>
-      </div>
-    </aside>
-
-  </div>
-
-  <!-- Bottom Global Sticky Audio Player -->
-  <div id="sticky-audio-player" class="hidden fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-700 p-3 z-30 shadow-lg">
-    <div class="max-w-7xl mx-auto flex items-center justify-between px-4">
-      <div class="flex items-center space-x-3">
-        <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center animate-pulse">
-          <i class="fa-solid fa-music text-xs"></i>
-        </div>
-        <div>
-          <p id="player-title" class="font-bold text-xs">Voice Clip Playing...</p>
-          <p id="player-artist" class="text-[10px] text-slate-400">VibeVerse Audio</p>
-        </div>
-      </div>
-      <audio id="global-audio-element" controls class="h-8 max-w-xs sm:max-w-md"></audio>
-      <button onclick="closeAudioPlayer()" class="text-slate-400 hover:text-slate-600 text-sm">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-  </div>
-
-  <!-- Footer with Copyright & Links -->
-  <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-6 mt-12 text-center text-xs text-slate-400">
-    <div class="max-w-7xl mx-auto px-4 space-y-2">
-      <div class="flex justify-center space-x-6">
-        <a href="#" class="hover:text-slate-600 dark:hover:text-slate-200">Privacy Policy</a>
-        <a href="#" class="hover:text-slate-600 dark:hover:text-slate-200">Terms of Service</a>
-        <a href="#" class="hover:text-slate-600 dark:hover:text-slate-200">Support</a>
-      </div>
-      <p>© <span id="copyright-year">2026</span> VibeVerse Platform Inc. All rights reserved.</p>
-    </div>
-  </footer>
-
-  <!-- MODALS -->
-
-  <!-- 1. Hosting / Live Link Modal -->
-  <div id="hosting-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-    <div class="bg-white dark:bg-slate-800 w-full max-w-xl rounded-2xl p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative max-h-[90vh] overflow-y-auto">
-      <button onclick="closeHostingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-        <i class="fa-solid fa-xmark text-lg"></i>
-      </button>
-      <h3 class="font-bold text-lg mb-2">Host & Publish Your Website</h3>
-      <p class="text-xs text-slate-400 mb-4">Export your file and get a live public address for free.</p>
-      
-      <div class="p-3 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl border border-emerald-200 dark:border-emerald-800 mb-4">
-        <label class="block text-xs font-bold text-emerald-800 dark:text-emerald-300 mb-1">Live Web Address (URL)</label>
-        <div class="flex space-x-2">
-          <input type="text" id="app-live-url" value="https://vibeverse-social.netlify.app" readonly class="w-full text-xs p-2 rounded-lg border bg-white dark:bg-slate-900">
-          <button onclick="copyAppUrl()" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-semibold shrink-0">Copy</button>
-        </div>
-      </div>
-
-      <div class="flex justify-between space-x-3">
-        <button onclick="downloadCode()" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl">Download index.html</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. Controls & User Guide Modal -->
-  <div id="control-guide-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-    <div class="bg-white dark:bg-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative">
-      <button onclick="closeControlGuideModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-        <i class="fa-solid fa-xmark text-lg"></i>
-      </button>
-      <h3 class="font-bold text-base mb-3"><i class="fa-solid fa-circle-question text-indigo-500 mr-2"></i>How to Control Website</h3>
-      <ul class="text-xs space-y-2 text-slate-600 dark:text-slate-300 list-disc pl-4">
-        <li><b>Create Posts:</b> Use the box on the main feed to type, upload photos/videos, attach YouTube links, or record singing notes.</li>
-        <li><b>Profile & Social Handles:</b> Go to "My Profile Settings" to edit name, bio, Facebook, and Instagram links.</li>
-        <li><b>Indian Subscription Tiers:</b> Click "Upgrade" in top right to simulate plan purchases in ₹ (INR) via UPI.</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- 3. Auth Modal (Login / Signup) -->
-  <div id="auth-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-    <div class="bg-white dark:bg-slate-800 w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative">
-      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-        <i class="fa-solid fa-xmark text-lg"></i>
-      </button>
-      <h3 id="auth-title" class="font-bold text-lg text-center mb-4">Log In to VibeVerse</h3>
-      <form onsubmit="handleAuthSubmit(event)" class="space-y-3 text-xs">
-        <div>
-          <label class="block font-semibold mb-1">Email Address</label>
-          <input type="email" required placeholder="user@example.com" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
-        </div>
-        <div>
-          <label class="block font-semibold mb-1">Password</label>
-          <input type="password" required placeholder="••••••••" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
-        </div>
-        <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition">Submit</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- 4. Subscription / Pricing Modal (INR) -->
-  <div id="sub-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-    <div class="bg-white dark:bg-slate-800 w-full max-w-lg rounded-2xl p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative">
-      <button onclick="closeSubModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-        <i class="fa-solid fa-xmark text-lg"></i>
-      </button>
-      <h3 class="font-bold text-lg text-center mb-1">Choose Subscription Plan</h3>
-      <p class="text-xs text-slate-400 text-center mb-4">Unlock premium features in Indian Rupees (₹)</p>
-
-      <div class="grid grid-cols-2 gap-4 mb-4">
-        <div onclick="selectPlan('Pro', 499)" class="p-4 rounded-xl border-2 border-indigo-500 bg-indigo-50/30 dark:bg-indigo-950/30 cursor-pointer text-center">
-          <h4 class="font-bold text-sm">Pro Artist</h4>
-          <p class="text-lg font-black text-indigo-600 my-1">₹499 <span class="text-[10px] font-normal text-slate-400">/mo</span></p>
-          <p class="text-[10px] text-slate-500">HD Singing Audio Uploads & Badges</p>
-        </div>
-        <div onclick="selectPlan('VIP', 999)" class="p-4 rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer text-center hover:border-indigo-500">
-          <h4 class="font-bold text-sm">VIP Studio</h4>
-          <p class="text-lg font-black text-indigo-600 my-1">₹999 <span class="text-[10px] font-normal text-slate-400">/mo</span></p>
-          <p class="text-[10px] text-slate-500">Unlimited Videos & VIP Crown Badge</p>
-        </div>
-      </div>
-
-      <!-- Payment Method -->
-      <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl space-y-2 text-xs">
-        <p class="font-bold">Select Payment Option:</p>
-        <div class="flex space-x-3">
-          <label class="flex items-center space-x-1 cursor-pointer">
-            <input type="radio" name="pay" checked>
-            <span>UPI / GPay / Paytm</span>
-          </label>
-          <label class="flex items-center space-x-1 cursor-pointer">
-            <input type="radio" name="pay">
-            <span>Debit / Credit Card</span>
-          </label>
-        </div>
-        <button onclick="processPayment()" class="w-full mt-2 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl">Pay & Subscribe Now</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- JAVASCRIPT LOGIC -->
-  <script>
-    // State Management
-    let currentUser = {
-      name: "Alex Rivera",
-      handle: "@alex_rivera",
-      bio: "Singer, developer, & creative content creator 🎵✨",
-      avatar: "https://placehold.co/100x100/6366f1/ffffff?text=You",
-      isLoggedIn: true,
-      plan: "Free",
-      facebook: "",
-      instagram: ""
-    };
-
-    let posts = [
-      {
-        id: 1,
-        author: "Sophia Chen",
-        handle: "@sophiamusic",
-        avatar: "https://placehold.co/100x100/ec4899/ffffff?text=S",
-        text: "Just recorded a new vocal acoustic session! Check it out below 👇 #singing #livemusic",
-        timestamp: "10 mins ago",
-        likes: 24,
-        isLiked: false,
-        youtubeUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
-      },
-      {
-        id: 2,
-        author: "Alex Rivera",
-        handle: "@alex_rivera",
-        avatar: "https://placehold.co/100x100/6366f1/ffffff?text=You",
-        text: "Welcome to VibeVerse! Excited to connect with all fellow artists here. #vibes",
-        timestamp: "1 hour ago",
-        likes: 12,
-        isLiked: true
-      }
-    ];
-
-    let currentAttachment = { type: null, data: null };
-    let selectedPlan = { name: 'Pro', price: 499 };
-
-    // Initial load
-    window.onload = function() {
-      document.getElementById('copyright-year').innerText = new Date().getFullYear();
-      renderPosts();
-    };
-
-    // Tab Switching Logic
-    function switchTab(tab) {
-      document.getElementById('tab-feed').classList.add('hidden');
-      document.getElementById('tab-chat').classList.add('hidden');
-      document.getElementById('tab-profile').classList.add('hidden');
-
-      document.getElementById('nav-feed').className = "w-full px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center space-x-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition";
-      document.getElementById('nav-chat').className = "w-full px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center space-x-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition";
-      document.getElementById('nav-profile').className = "w-full px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center space-x-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition";
-
-      document.getElementById(`tab-${tab}`).classList.remove('hidden');
-      document.getElementById(`nav-${tab}`).className = "w-full px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center space-x-3 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 transition";
-    }
-
-    // Render Posts List
-    function renderPosts(filtered = posts) {
-      const container = document.getElementById('posts-container');
-      container.innerHTML = "";
-
-      filtered.forEach(post => {
-        const postCard = document.createElement('div');
-        postCard.className = "bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-700 space-y-3";
-        
-        let mediaHtml = "";
-        if (post.img) mediaHtml += `<img src="${post.img}" class="rounded-xl max-h-80 w-full object-cover">`;
-        if (post.video) mediaHtml += `<video src="${post.video}" controls class="rounded-xl max-h-80 w-full object-cover"></video>`;
-        if (post.audio) mediaHtml += `<div class="p-3 bg-indigo-50 dark:bg-slate-900 rounded-xl flex items-center space-x-3"><button onclick="playGlobalAudio('${post.audio}', '${post.author}')" class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center"><i class="fa-solid fa-play text-xs"></i></button><span class="text-xs font-semibold">Audio / Singing Note</span></div>`;
-        if (post.youtubeUrl) mediaHtml += `<iframe class="w-full h-56 rounded-xl" src="${post.youtubeUrl}" frameborder="0" allowfullscreen></iframe>`;
-
-        postCard.innerHTML = `
-          <div class="flex items-center justify-between">
-            <div class="flex items-center space-x-2.5">
-              <img src="${post.avatar}" class="w-9 h-9 rounded-full object-cover">
-              <div>
-                <p class="font-bold text-xs leading-tight">${post.author}</p>
-                <p class="text-[10px] text-slate-400">${post.handle} • ${post.timestamp}</p>
-              </div>
-            </div>
-          </div>
-          <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-200">${post.text}</p>
-          ${mediaHtml}
-          <div class="flex items-center space-x-4 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs text-slate-500">
-            <button onclick="likePost(${post.id})" class="flex items-center space-x-1 hover:text-red-500 ${post.isLiked ? 'text-red-500 font-bold' : ''}">
-              <i class="fa-${post.isLiked ? 'solid' : 'regular'} fa-heart"></i>
-              <span>${post.likes}</span>
-            </button>
-            <button class="flex items-center space-x-1 hover:text-indigo-500">
-              <i class="fa-regular fa-comment"></i>
-              <span>Comment</span>
-            </button>
-          </div>
-        `;
-        container.appendChild(postCard);
-      });
-    }
-
-    // Attachment Helpers
-    function handleImageSelect(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const url = URL.createObjectURL(file);
-        currentAttachment = { type: 'img', data: url };
-        document.getElementById('attachment-preview').classList.remove('hidden');
-        document.getElementById('img-preview-box').classList.remove('hidden');
-        document.getElementById('img-preview-tag').src = url;
-      }
-    }
-
-    function handleVideoSelect(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const url = URL.createObjectURL(file);
-        currentAttachment = { type: 'video', data: url };
-        document.getElementById('attachment-preview').classList.remove('hidden');
-        document.getElementById('video-preview-box').classList.remove('hidden');
-        document.getElementById('video-preview-tag').src = url;
-      }
-    }
-
-    function promptYoutubeUrl() {
-      const url = prompt("Paste YouTube Video URL:");
-      if (url) {
-        let embedUrl = url;
-        if (url.includes('watch?v=')) {
-          embedUrl = url.replace('watch?v=', 'embed/');
-        } else if (url.includes('youtu.be/')) {
-          embedUrl = url.replace('youtu.be/', 'youtube.com/embed/');
-        }
-        currentAttachment = { type: 'yt', data: embedUrl };
-        document.getElementById('attachment-preview').classList.remove('hidden');
-        document.getElementById('yt-preview-box').classList.remove('hidden');
-        document.getElementById('yt-preview-iframe').src = embedUrl;
-      }
-    }
-
-    function clearAttachment(type) {
-      currentAttachment = { type: null, data: null };
-      document.getElementById(`${type}-preview-box`).classList.add('hidden');
-      if (type === 'img' || type === 'video' || type === 'audio' || type === 'yt') {
-        document.getElementById('attachment-preview').classList.add('hidden');
-      }
-    }
-
-    function publishPost() {
-      const text = document.getElementById('post-text').value;
-      if (!text && !currentAttachment.type) return;
-
-      const newPost = {
-        id: Date.now(),
-        author: currentUser.name,
-        handle: currentUser.handle,
-        avatar: currentUser.avatar,
-        text: text,
-        timestamp: "Just now",
-        likes: 0,
-        isLiked: false
-      };
-
-      if (currentAttachment.type === 'img') newPost.img = currentAttachment.data;
-      if (currentAttachment.type === 'video') newPost.video = currentAttachment.data;
-      if (currentAttachment.type === 'yt') newPost.youtubeUrl = currentAttachment.data;
-
-      posts.unshift(newPost);
-      document.getElementById('post-text').value = "";
-      clearAttachment('img');
-      clearAttachment('video');
-      clearAttachment('yt');
-      renderPosts();
-    }
-
-    function likePost(id) {
-      const p = posts.find(item => item.id === id);
-      if (p) {
-        p.isLiked = !p.isLiked;
-        p.likes += p.isLiked ? 1 : -1;
-        renderPosts();
-      }
-    }
-
-    function filterPosts(query) {
-      if (!query) {
-        renderPosts();
-        return;
-      }
-      const q = query.toLowerCase();
-      const filtered = posts.filter(p => p.text.toLowerCase().includes(q) || p.author.toLowerCase().includes(q));
-      renderPosts(filtered);
-    }
-
-    function saveProfile() {
-      currentUser.name = document.getElementById('edit-name').value;
-      currentUser.handle = document.getElementById('edit-handle').value;
-      currentUser.bio = document.getElementById('edit-bio').value;
-
-      document.getElementById('sidebar-name').innerText = currentUser.name;
-      document.getElementById('sidebar-handle').innerText = currentUser.handle;
-      document.getElementById('sidebar-bio').innerText = currentUser.bio;
-
-      const fb = document.getElementById('edit-fb').value;
-      const ig = document.getElementById('edit-ig').value;
-
-      if (fb) {
-        document.getElementById('fb-link').href = fb;
-        document.getElementById('fb-link').classList.remove('hidden');
-      }
-      if (ig) {
-        document.getElementById('ig-link').href = `https://instagram.com/${ig.replace('@','')}`;
-        document.getElementById('ig-link').classList.remove('hidden');
-      }
-
-      alert("Profile updated successfully!");
-    }
-
-    // Modal control triggers
-    function openHostingModal() { document.getElementById('hosting-modal').classList.remove('hidden'); document.getElementById('hosting-modal').classList.add('flex'); }
-    function closeHostingModal() { document.getElementById('hosting-modal').classList.add('hidden'); document.getElementById('hosting-modal').classList.remove('flex'); }
-
-    function openControlGuideModal() { document.getElementById('control-guide-modal').classList.remove('hidden'); document.getElementById('control-guide-modal').classList.add('flex'); }
-    function closeControlGuideModal() { document.getElementById('control-guide-modal').classList.add('hidden'); document.getElementById('control-guide-modal').classList.remove('flex'); }
-
-    function openAuthModal() { document.getElementById('auth-modal').classList.remove('hidden'); document.getElementById('auth-modal').classList.add('flex'); }
-    function closeAuthModal() { document.getElementById('auth-modal').classList.add('hidden'); document.getElementById('auth-modal').classList.remove('flex'); }
-
-    function openSubModal() { document.getElementById('sub-modal').classList.remove('hidden'); document.getElementById('sub-modal').classList.add('flex'); }
-    function closeSubModal() { document.getElementById('sub-modal').classList.add('hidden'); document.getElementById('sub-modal').classList.remove('flex'); }
-
-    function processPayment() {
-      alert(`Payment of ₹${selectedPlan.price} processed successfully! Welcome to ${selectedPlan.name}.`);
-      document.getElementById('sub-badge').innerText = selectedPlan.name;
-      closeSubModal();
-    }
-
-    function selectPlan(name, price) {
-      selectedPlan = { name, price };
-    }
-
-    function toggleFollow(btn) {
-      if (btn.innerText === "Follow") {
-        btn.innerText = "Following";
-        btn.className = "px-3 py-1 bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold";
-      } else {
-        btn.innerText = "Follow";
-        btn.className = "px-3 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-semibold";
-      }
-    }
-
-    function copyAppUrl() {
-      const input = document.getElementById('app-live-url');
-      input.select();
-      document.execCommand('copy');
-      alert("App Link copied to clipboard!");
-    }
-
-    function downloadCode() {
-      const element = document.createElement('a');
-      const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
-      element.href = URL.createObjectURL(file);
-      element.download = "index.html";
-      document.body.appendChild(element);
-      element.click();
-      document.body.removeChild(element);
-    }
-  </script>
-</body>
-</html>
+              
