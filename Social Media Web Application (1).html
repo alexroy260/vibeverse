@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibeVerse - Social Media Platform</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.5);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(107, 114, 128, 0.8);
+    }
+  </style>
+</head>
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans min-h-full flex flex-col transition-colors duration-200">
+
+  <!-- Top Navigation Bar -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('feed')">
+          <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white font-black text-xl shadow-md">
+            V
+          </div>
+          <span class="font-bold text-xl tracking-tight bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
+            VibeVerse
+          </span>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="hidden md:flex flex-1 max-w-md mx-8">
+          <div class="relative w-full">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+              <i class="fa-solid fa-magnifying-glass text-sm"></i>
+            </span>
+            <input type="text" id="global-search" onkeyup="filterPosts(this.value)" placeholder="Search posts, hashtags (#singing), users..." class="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 transition">
+          </div>
+        </div>
+
+        <!-- Header Controls & Auth -->
+        <div class="flex items-center space-x-2 sm:space-x-3">
+          <!-- Guide Button -->
+          <button onclick="openControlGuideModal()" title="How to Control Website" class="px-3 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white font-semibold text-xs flex items-center space-x-1.5 shadow transition">
+            <i class="fa-solid fa-circle-question"></i>
+            <span class="hidden sm:inline">Controls & Guide</span>
+          </button>
+
+          <!-- Host App Button -->
+          <button onclick="openHostingModal()" title="Host / Publish Website" class="px-3 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs flex items-center space-x-1.5 shadow transition">
+            <i class="fa-solid fa-cloud-arrow-up"></i>
+            <span class="hidden sm:inline">Host Live</span>
+          </button>
+
+          <!-- Go Pro Button -->
+          <button onclick="openSubModal()" class="px-3 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold text-xs flex items-center space-x-1 shadow transition">
+            <i class="fa-solid fa-crown text-xs"></i>
+            <span class="hidden sm:inline">Upgrade</span>
+          </button>
+
+          <!-- Auth Actions (Signed Out vs Signed In) -->
+          <div id="auth-buttons" class="flex items-center space-x-2">
+            <button onclick="openAuthModal('login')" class="px-3 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+              Log In
+            </button>
+            <button onclick="openAuthModal('signup')" class="px-3 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow transition">
+              Sign Up
+            </button>
+          </div>
+
+          <div id="user-profile-header" class="hidden flex items-center space-x-2 border-l border-slate-200 dark:border-slate-700 pl-3">
+            <img id="header-avatar" src="https://placehold.co/100x100/6366f1/ffffff?text=User" alt="Avatar" class="w-8 h-8 rounded-full object-cover border border-indigo-500">
+            <button onclick="logoutUser()" title="Logout" class="p-2 rounded-xl text-slate-400 hover:text-red-500 transition">
+              <i class="fa-solid fa-right-from-bracket"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main App Layout -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-6">
+    
+    <!-- Left Sidebar: Profile & Navigation -->
+    <aside class="lg:col-span-3 space-y-4">
+      <!-- Profile Summary Card -->
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 text-center relative overflow-hidden">
+        <div id="profile-banner" class="h-16 -mx-5 -mt-5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 mb-8"></div>
+        <div class="relative inline-block -mt-16 mb-2">
+          <img id="sidebar-avatar" src="https://placehold.co/100x100/6366f1/ffffff?text=You" alt="Profile Avatar" class="w-20 h-20 rounded-full border-4 border-white dark:border-slate-800 object-cover shadow-md mx-auto">
+          <span id="sub-badge" class="absolute bottom-0 right-0 bg-amber-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold shadow">
+            Free
+          </span>
+        </div>
+        <h2 id="sidebar-name" class="font-bold text-slate-800 dark:text-slate-100 text-base">Alex Rivera</h2>
+        <p id="sidebar-handle" class="text-xs text-slate-400 mb-3">@alex_rivera</p>
+        <p id="sidebar-bio" class="text-xs text-slate-600 dark:text-slate-300 mb-4 px-2">Singer, developer, & creative content creator 🎵✨</p>
+
+        <!-- Social Handles Badges -->
+        <div id="social-links-container" class="flex justify-center space-x-3 mb-4">
+          <a id="fb-link" href="#" target="_blank" class="text-slate-400 hover:text-blue-600 text-sm hidden">
+            <i class="fa-brands fa-facebook"></i>
+          </a>
+          <a id="ig-link" href="#" target="_blank" class="text-slate-400 hover:text-pink-600 text-sm hidden">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 py-3 border-t border-slate-100 dark:border-slate-700 text-center">
+          <div>
+            <span class="block font-bold text-sm text-slate-800 dark:text-slate-200" id="stat-posts">4</span>
+            <span class="text-[10px] text-slate-400 uppercase font-semibold">Posts</span>
+          </div>
+          <div>
+            <span class="block font-bold text-sm text-slate-800 dark:text-slate-200" id="stat-followers">128</span>
+            <span class="text-[10px] text-slate-400 uppercase font-semibold">Followers</span>
+          </div>
+          <div>
+            <span class="block font-bold text-sm text-slate-800 dark:text-slate-200" id="stat-following">84</span>
+            <span class="text-[10px] text-slate-400 uppercase font-semibold">Following</span>
+          </div>
+        </div>
+
+        <button onclick="switchTab('profile')" class="w-full mt-2 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-xs font-semibold text-slate-700 dark:text-slate-200 transition">
+          Edit Profile
+        </button>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="bg-white dark:bg-slate-800 rounded-2xl p-3 shadow-sm border border-slate-200 dark:border-slate-700 space-y-1">
+        <button onclick="switchTab('feed')" id="nav-feed" class="w-full px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center space-x-3 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 transition">
+          <i class="fa-solid fa-house text-sm"></i>
+          <span>Home Feed</span>
+        </button>
+        <button onclick="switchTab('chat')" id="nav-chat" class="w-full px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center space-x-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+          <i class="fa-solid fa-comments text-sm"></i>
+          <span>Direct Messages</span>
+        </button>
+        <button onclick="switchTab('profile')" id="nav-profile" class="w-full px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center space-x-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition">
+          <i class="fa-solid fa-user text-sm"></i>
+          <span>My Profile Settings</span>
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Center Content Area -->
+    <main class="lg:col-span-6 space-y-5">
+      
+      <!-- TAB 1: FEED -->
+      <div id="tab-feed" class="space-y-5">
+        
+        <!-- Post Creator -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-700 space-y-3">
+          <div class="flex items-start space-x-3">
+            <img id="creator-avatar" src="https://placehold.co/100x100/6366f1/ffffff?text=You" alt="User" class="w-10 h-10 rounded-full object-cover border border-slate-200 dark:border-slate-700">
+            <textarea id="post-text" rows="3" placeholder="What's on your mind? Share a thought, photo, video, or voice recording..." class="w-full p-2 bg-transparent text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 resize-none focus:outline-none"></textarea>
+          </div>
+
+          <!-- Attachments Previews -->
+          <div id="attachment-preview" class="hidden space-y-2 pt-2 border-t border-slate-100 dark:border-slate-700">
+            <!-- Dynamic Image Preview -->
+            <div id="img-preview-box" class="hidden relative inline-block">
+              <img id="img-preview-tag" src="" class="max-h-48 rounded-xl object-cover border">
+              <button onclick="clearAttachment('img')" class="absolute top-2 right-2 bg-slate-900/70 text-white rounded-full p-1 text-xs">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+            <!-- Dynamic Video Preview -->
+            <div id="video-preview-box" class="hidden relative">
+              <video id="video-preview-tag" controls class="max-h-48 w-full rounded-xl object-cover border"></video>
+              <button onclick="clearAttachment('video')" class="absolute top-2 right-2 bg-slate-900/70 text-white rounded-full p-1 text-xs">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+            </div>
+            <!-- Audio Preview -->
+            <div id="audio-preview-box" class="hidden p-3 bg-indigo-50 dark:bg-slate-900 rounded-xl flex items-center justify-between">
+              <audio id="audio-preview-tag" controls class="h-8 w-full max-w-xs"></audio>
+              <button onclick="clearAttachment('audio')" class="text-slate-400 hover:text-red-500 ml-2">
+                <i class="fa-solid fa-trash text-sm"></i>
+              </button>
+            </div>
+            <!-- YouTube Preview -->
+            <div id="yt-preview-box" class="hidden p-3 bg-red-50 dark:bg-red-950/30 rounded-xl space-y-2">
+              <div class="flex items-center justify-between text-xs text-red-600 dark:text-red-400 font-semibold">
+                <span><i class="fa-brands fa-youtube mr-1"></i> YouTube Video Link Attached</span>
+                <button onclick="clearAttachment('yt')" class="text-slate-400 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <iframe id="yt-preview-iframe" class="w-full h-44 rounded-xl" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+
+          <!-- Attachment Toolbar & Publish Button -->
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100 dark:border-slate-700">
+            <div class="flex items-center space-x-2 sm:space-x-4 text-slate-500 dark:text-slate-400 text-sm">
+              <!-- Image Upload -->
+              <label class="cursor-pointer hover:text-indigo-500 transition p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" title="Add Image">
+                <i class="fa-solid fa-image"></i>
+                <input type="file" id="input-image" accept="image/*" class="hidden" onchange="handleImageSelect(event)">
+              </label>
+
+              <!-- Video Upload -->
+              <label class="cursor-pointer hover:text-indigo-500 transition p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" title="Add Video">
+                <i class="fa-solid fa-video"></i>
+                <input type="file" id="input-video" accept="video/*" class="hidden" onchange="handleVideoSelect(event)">
+              </label>
+
+              <!-- Mic Singing Audio Recording -->
+              <button id="record-btn" onclick="toggleAudioRecording()" class="hover:text-red-500 transition p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" title="Record Singing Audio">
+                <i class="fa-solid fa-microphone"></i>
+              </button>
+
+              <!-- YouTube Link Modal Opener -->
+              <button onclick="promptYoutubeUrl()" class="hover:text-red-600 transition p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" title="Attach YouTube Video">
+                <i class="fa-brands fa-youtube text-base"></i>
+              </button>
+            </div>
+
+            <button onclick="publishPost()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-md transition">
+              Publish Post
+            </button>
+          </div>
+        </div>
+
+        <!-- Posts Feed List -->
+        <div id="posts-container" class="space-y-4">
+          <!-- Posts will be dynamically rendered here -->
+        </div>
+      </div>
+
+      <!-- TAB 2: DIRECT MESSAGES -->
+      <div id="tab-chat" class="hidden bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 h-[550px] flex flex-col">
+        <div class="p-4 border-b border-slate-200 dark:border-slate-700 flex items-center space-x-3">
+          <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+          <h3 class="font-bold text-sm">Direct Chat Room</h3>
+        </div>
+        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-3">
+          <div class="flex items-start space-x-2">
+            <img src="https://placehold.co/100x100/ec4899/ffffff?text=S" class="w-7 h-7 rounded-full">
+            <div class="bg-slate-100 dark:bg-slate-700 p-3 rounded-2xl max-w-xs text-xs">
+              <span class="font-bold block mb-0.5">Sophia Chen</span>
+              Hey! Loved your recent singing clip! 🎤✨
+            </div>
+          </div>
+        </div>
+        <div class="p-3 border-t border-slate-200 dark:border-slate-700 flex space-x-2">
+          <input type="text" id="chat-input" placeholder="Type a message..." class="flex-1 px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs focus:outline-none">
+          <button onclick="sendChatMessage()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl">Send</button>
+        </div>
+      </div>
+
+      <!-- TAB 3: PROFILE SETTINGS -->
+      <div id="tab-profile" class="hidden bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 space-y-4">
+        <h3 class="font-bold text-base border-b border-slate-200 dark:border-slate-700 pb-3">Edit Profile & Account Details</h3>
+        
+        <div class="space-y-3 text-xs">
+          <div>
+            <label class="block font-semibold mb-1">Display Name</label>
+            <input type="text" id="edit-name" value="Alex Rivera" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Username Handle</label>
+            <input type="text" id="edit-handle" value="@alex_rivera" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1">Bio</label>
+            <textarea id="edit-bio" rows="2" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs">Singer, developer, & creative content creator 🎵✨</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block font-semibold mb-1"><i class="fa-brands fa-facebook text-blue-600 mr-1"></i> Facebook Link</label>
+              <input type="text" id="edit-fb" placeholder="https://facebook.com/yourprofile" class="w-full p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs">
+            </div>
+            <div>
+              <label class="block font-semibold mb-1"><i class="fa-brands fa-instagram text-pink-600 mr-1"></i> Instagram Handle</label>
+              <input type="text" id="edit-ig" placeholder="@yourinstagram" class="w-full p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-xs">
+            </div>
+          </div>
+          <button onclick="saveProfile()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl text-xs shadow">
+            Save Profile Changes
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Right Sidebar: Trends & Suggested Users -->
+    <aside class="lg:col-span-3 space-y-4">
+      <!-- Trending Hashtags -->
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-700">
+        <h3 class="font-bold text-xs uppercase tracking-wider text-slate-400 mb-3">Trending Topics</h3>
+        <div class="space-y-2 text-xs">
+          <div onclick="filterPosts('#singing')" class="p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer flex justify-between items-center">
+            <span class="font-semibold text-indigo-600 dark:text-indigo-400">#singing</span>
+            <span class="text-[10px] text-slate-400">1.2k posts</span>
+          </div>
+          <div onclick="filterPosts('#livemusic')" class="p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer flex justify-between items-center">
+            <span class="font-semibold text-indigo-600 dark:text-indigo-400">#livemusic</span>
+            <span class="text-[10px] text-slate-400">856 posts</span>
+          </div>
+          <div onclick="filterPosts('#vibes')" class="p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer flex justify-between items-center">
+            <span class="font-semibold text-indigo-600 dark:text-indigo-400">#vibes</span>
+            <span class="text-[10px] text-slate-400">640 posts</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Suggested Connections -->
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-700">
+        <h3 class="font-bold text-xs uppercase tracking-wider text-slate-400 mb-3">Suggested Creators</h3>
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <img src="https://placehold.co/100x100/ec4899/ffffff?text=S" class="w-8 h-8 rounded-full">
+              <div>
+                <p class="font-bold text-xs leading-tight">Sophia Chen</p>
+                <p class="text-[10px] text-slate-400">@sophiamusic</p>
+              </div>
+            </div>
+            <button onclick="toggleFollow(this)" class="px-3 py-1 bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400 hover:bg-indigo-100 rounded-lg text-xs font-semibold">Follow</button>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+              <img src="https://placehold.co/100x100/3b82f6/ffffff?text=M" class="w-8 h-8 rounded-full">
+              <div>
+                <p class="font-bold text-xs leading-tight">Marcus Vance</p>
+                <p class="text-[10px] text-slate-400">@marcus_v</p>
+              </div>
+            </div>
+            <button onclick="toggleFollow(this)" class="px-3 py-1 bg-indigo-50 text-indigo-600 dark:bg-indigo-950/50 dark:text-indigo-400 hover:bg-indigo-100 rounded-lg text-xs font-semibold">Follow</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Bottom Global Sticky Audio Player -->
+  <div id="sticky-audio-player" class="hidden fixed bottom-0 left-0 right-0 bg-white/95 dark:bg-slate-800/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-700 p-3 z-30 shadow-lg">
+    <div class="max-w-7xl mx-auto flex items-center justify-between px-4">
+      <div class="flex items-center space-x-3">
+        <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center animate-pulse">
+          <i class="fa-solid fa-music text-xs"></i>
+        </div>
+        <div>
+          <p id="player-title" class="font-bold text-xs">Voice Clip Playing...</p>
+          <p id="player-artist" class="text-[10px] text-slate-400">VibeVerse Audio</p>
+        </div>
+      </div>
+      <audio id="global-audio-element" controls class="h-8 max-w-xs sm:max-w-md"></audio>
+      <button onclick="closeAudioPlayer()" class="text-slate-400 hover:text-slate-600 text-sm">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer with Copyright & Links -->
+  <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-6 mt-12 text-center text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <div class="flex justify-center space-x-6">
+        <a href="#" class="hover:text-slate-600 dark:hover:text-slate-200">Privacy Policy</a>
+        <a href="#" class="hover:text-slate-600 dark:hover:text-slate-200">Terms of Service</a>
+        <a href="#" class="hover:text-slate-600 dark:hover:text-slate-200">Support</a>
+      </div>
+      <p>© <span id="copyright-year">2026</span> VibeVerse Platform Inc. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- MODALS -->
+
+  <!-- 1. Hosting / Live Link Modal -->
+  <div id="hosting-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="bg-white dark:bg-slate-800 w-full max-w-xl rounded-2xl p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeHostingModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <h3 class="font-bold text-lg mb-2">Host & Publish Your Website</h3>
+      <p class="text-xs text-slate-400 mb-4">Export your file and get a live public address for free.</p>
+      
+      <div class="p-3 bg-emerald-50 dark:bg-emerald-950/40 rounded-xl border border-emerald-200 dark:border-emerald-800 mb-4">
+        <label class="block text-xs font-bold text-emerald-800 dark:text-emerald-300 mb-1">Live Web Address (URL)</label>
+        <div class="flex space-x-2">
+          <input type="text" id="app-live-url" value="https://vibeverse-social.netlify.app" readonly class="w-full text-xs p-2 rounded-lg border bg-white dark:bg-slate-900">
+          <button onclick="copyAppUrl()" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-semibold shrink-0">Copy</button>
+        </div>
+      </div>
+
+      <div class="flex justify-between space-x-3">
+        <button onclick="downloadCode()" class="w-full py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl">Download index.html</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Controls & User Guide Modal -->
+  <div id="control-guide-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="bg-white dark:bg-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative">
+      <button onclick="closeControlGuideModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <h3 class="font-bold text-base mb-3"><i class="fa-solid fa-circle-question text-indigo-500 mr-2"></i>How to Control Website</h3>
+      <ul class="text-xs space-y-2 text-slate-600 dark:text-slate-300 list-disc pl-4">
+        <li><b>Create Posts:</b> Use the box on the main feed to type, upload photos/videos, attach YouTube links, or record singing notes.</li>
+        <li><b>Profile & Social Handles:</b> Go to "My Profile Settings" to edit name, bio, Facebook, and Instagram links.</li>
+        <li><b>Indian Subscription Tiers:</b> Click "Upgrade" in top right to simulate plan purchases in ₹ (INR) via UPI.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 3. Auth Modal (Login / Signup) -->
+  <div id="auth-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="bg-white dark:bg-slate-800 w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative">
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <h3 id="auth-title" class="font-bold text-lg text-center mb-4">Log In to VibeVerse</h3>
+      <form onsubmit="handleAuthSubmit(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold mb-1">Email Address</label>
+          <input type="email" required placeholder="user@example.com" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Password</label>
+          <input type="password" required placeholder="••••••••" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+        </div>
+        <button type="submit" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Subscription / Pricing Modal (INR) -->
+  <div id="sub-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+    <div class="bg-white dark:bg-slate-800 w-full max-w-lg rounded-2xl p-6 shadow-2xl border border-slate-200 dark:border-slate-700 relative">
+      <button onclick="closeSubModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+      <h3 class="font-bold text-lg text-center mb-1">Choose Subscription Plan</h3>
+      <p class="text-xs text-slate-400 text-center mb-4">Unlock premium features in Indian Rupees (₹)</p>
+
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div onclick="selectPlan('Pro', 499)" class="p-4 rounded-xl border-2 border-indigo-500 bg-indigo-50/30 dark:bg-indigo-950/30 cursor-pointer text-center">
+          <h4 class="font-bold text-sm">Pro Artist</h4>
+          <p class="text-lg font-black text-indigo-600 my-1">₹499 <span class="text-[10px] font-normal text-slate-400">/mo</span></p>
+          <p class="text-[10px] text-slate-500">HD Singing Audio Uploads & Badges</p>
+        </div>
+        <div onclick="selectPlan('VIP', 999)" class="p-4 rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer text-center hover:border-indigo-500">
+          <h4 class="font-bold text-sm">VIP Studio</h4>
+          <p class="text-lg font-black text-indigo-600 my-1">₹999 <span class="text-[10px] font-normal text-slate-400">/mo</span></p>
+          <p class="text-[10px] text-slate-500">Unlimited Videos & VIP Crown Badge</p>
+        </div>
+      </div>
+
+      <!-- Payment Method -->
+      <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl space-y-2 text-xs">
+        <p class="font-bold">Select Payment Option:</p>
+        <div class="flex space-x-3">
+          <label class="flex items-center space-x-1 cursor-pointer">
+            <input type="radio" name="pay" checked>
+            <span>UPI / GPay / Paytm</span>
+          </label>
+          <label class="flex items-center space-x-1 cursor-pointer">
+            <input type="radio" name="pay">
+            <span>Debit / Credit Card</span>
+          </label>
+        </div>
+        <button onclick="processPayment()" class="w-full mt-2 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl">Pay & Subscribe Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // State Management
+    let currentUser = {
+      name: "Alex Rivera",
+      handle: "@alex_rivera",
+      bio: "Singer, developer, & creative content creator 🎵✨",
+      avatar: "https://placehold.co/100x100/6366f1/ffffff?text=You",
+      isLoggedIn: true,
+      plan: "Free",
+      facebook: "",
+      instagram: ""
+    };
+
+    let posts = [
+      {
+        id: 1,
+        author: "Sophia Chen",
+        handle: "@sophiamusic",
+        avatar: "https://placehold.co/100x100/ec4899/ffffff?text=S",
+        text: "Just recorded a new vocal acoustic session! Check it out below 👇 #singing #livemusic",
+        timestamp: "10 mins ago",
+        likes: 24,
+        isLiked: false,
+        youtubeUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+      },
+      {
+        id: 2,
+        author: "Alex Rivera",
+        handle: "@alex_rivera",
+        avatar: "https://placehold.co/100x100/6366f1/ffffff?text=You",
+        text: "Welcome to VibeVerse! Excited to connect with all fellow artists here. #vibes",
+        timestamp: "1 hour ago",
+        likes: 12,
+        isLiked: true
+      }
+    ];
+
+    let currentAttachment = { type: null, data: null };
+    let selectedPlan = { name: 'Pro', price: 499 };
+
+    // Initial load
+    window.onload = function() {
+      document.getElementById('copyright-year').innerText = new Date().getFullYear();
+      renderPosts();
+    };
+
+    // Tab Switching Logic
+    function switchTab(tab) {
+      document.getElementById('tab-feed').classList.add('hidden');
+      document.getElementById('tab-chat').classList.add('hidden');
+      document.getElementById('tab-profile').classList.add('hidden');
+
+      document.getElementById('nav-feed').className = "w-full px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center space-x-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition";
+      document.getElementById('nav-chat').className = "w-full px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center space-x-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition";
+      document.getElementById('nav-profile').className = "w-full px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center space-x-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition";
+
+      document.getElementById(`tab-${tab}`).classList.remove('hidden');
+      document.getElementById(`nav-${tab}`).className = "w-full px-4 py-2.5 rounded-xl font-semibold text-xs flex items-center space-x-3 bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 transition";
+    }
+
+    // Render Posts List
+    function renderPosts(filtered = posts) {
+      const container = document.getElementById('posts-container');
+      container.innerHTML = "";
+
+      filtered.forEach(post => {
+        const postCard = document.createElement('div');
+        postCard.className = "bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200 dark:border-slate-700 space-y-3";
+        
+        let mediaHtml = "";
+        if (post.img) mediaHtml += `<img src="${post.img}" class="rounded-xl max-h-80 w-full object-cover">`;
+        if (post.video) mediaHtml += `<video src="${post.video}" controls class="rounded-xl max-h-80 w-full object-cover"></video>`;
+        if (post.audio) mediaHtml += `<div class="p-3 bg-indigo-50 dark:bg-slate-900 rounded-xl flex items-center space-x-3"><button onclick="playGlobalAudio('${post.audio}', '${post.author}')" class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center"><i class="fa-solid fa-play text-xs"></i></button><span class="text-xs font-semibold">Audio / Singing Note</span></div>`;
+        if (post.youtubeUrl) mediaHtml += `<iframe class="w-full h-56 rounded-xl" src="${post.youtubeUrl}" frameborder="0" allowfullscreen></iframe>`;
+
+        postCard.innerHTML = `
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2.5">
+              <img src="${post.avatar}" class="w-9 h-9 rounded-full object-cover">
+              <div>
+                <p class="font-bold text-xs leading-tight">${post.author}</p>
+                <p class="text-[10px] text-slate-400">${post.handle} • ${post.timestamp}</p>
+              </div>
+            </div>
+          </div>
+          <p class="text-xs leading-relaxed text-slate-700 dark:text-slate-200">${post.text}</p>
+          ${mediaHtml}
+          <div class="flex items-center space-x-4 pt-2 border-t border-slate-100 dark:border-slate-700 text-xs text-slate-500">
+            <button onclick="likePost(${post.id})" class="flex items-center space-x-1 hover:text-red-500 ${post.isLiked ? 'text-red-500 font-bold' : ''}">
+              <i class="fa-${post.isLiked ? 'solid' : 'regular'} fa-heart"></i>
+              <span>${post.likes}</span>
+            </button>
+            <button class="flex items-center space-x-1 hover:text-indigo-500">
+              <i class="fa-regular fa-comment"></i>
+              <span>Comment</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(postCard);
+      });
+    }
+
+    // Attachment Helpers
+    function handleImageSelect(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        currentAttachment = { type: 'img', data: url };
+        document.getElementById('attachment-preview').classList.remove('hidden');
+        document.getElementById('img-preview-box').classList.remove('hidden');
+        document.getElementById('img-preview-tag').src = url;
+      }
+    }
+
+    function handleVideoSelect(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const url = URL.createObjectURL(file);
+        currentAttachment = { type: 'video', data: url };
+        document.getElementById('attachment-preview').classList.remove('hidden');
+        document.getElementById('video-preview-box').classList.remove('hidden');
+        document.getElementById('video-preview-tag').src = url;
+      }
+    }
+
+    function promptYoutubeUrl() {
+      const url = prompt("Paste YouTube Video URL:");
+      if (url) {
+        let embedUrl = url;
+        if (url.includes('watch?v=')) {
+          embedUrl = url.replace('watch?v=', 'embed/');
+        } else if (url.includes('youtu.be/')) {
+          embedUrl = url.replace('youtu.be/', 'youtube.com/embed/');
+        }
+        currentAttachment = { type: 'yt', data: embedUrl };
+        document.getElementById('attachment-preview').classList.remove('hidden');
+        document.getElementById('yt-preview-box').classList.remove('hidden');
+        document.getElementById('yt-preview-iframe').src = embedUrl;
+      }
+    }
+
+    function clearAttachment(type) {
+      currentAttachment = { type: null, data: null };
+      document.getElementById(`${type}-preview-box`).classList.add('hidden');
+      if (type === 'img' || type === 'video' || type === 'audio' || type === 'yt') {
+        document.getElementById('attachment-preview').classList.add('hidden');
+      }
+    }
+
+    function publishPost() {
+      const text = document.getElementById('post-text').value;
+      if (!text && !currentAttachment.type) return;
+
+      const newPost = {
+        id: Date.now(),
+        author: currentUser.name,
+        handle: currentUser.handle,
+        avatar: currentUser.avatar,
+        text: text,
+        timestamp: "Just now",
+        likes: 0,
+        isLiked: false
+      };
+
+      if (currentAttachment.type === 'img') newPost.img = currentAttachment.data;
+      if (currentAttachment.type === 'video') newPost.video = currentAttachment.data;
+      if (currentAttachment.type === 'yt') newPost.youtubeUrl = currentAttachment.data;
+
+      posts.unshift(newPost);
+      document.getElementById('post-text').value = "";
+      clearAttachment('img');
+      clearAttachment('video');
+      clearAttachment('yt');
+      renderPosts();
+    }
+
+    function likePost(id) {
+      const p = posts.find(item => item.id === id);
+      if (p) {
+        p.isLiked = !p.isLiked;
+        p.likes += p.isLiked ? 1 : -1;
+        renderPosts();
+      }
+    }
+
+    function filterPosts(query) {
+      if (!query) {
+        renderPosts();
+        return;
+      }
+      const q = query.toLowerCase();
+      const filtered = posts.filter(p => p.text.toLowerCase().includes(q) || p.author.toLowerCase().includes(q));
+      renderPosts(filtered);
+    }
+
+    function saveProfile() {
+      currentUser.name = document.getElementById('edit-name').value;
+      currentUser.handle = document.getElementById('edit-handle').value;
+      currentUser.bio = document.getElementById('edit-bio').value;
+
+      document.getElementById('sidebar-name').innerText = currentUser.name;
+      document.getElementById('sidebar-handle').innerText = currentUser.handle;
+      document.getElementById('sidebar-bio').innerText = currentUser.bio;
+
+      const fb = document.getElementById('edit-fb').value;
+      const ig = document.getElementById('edit-ig').value;
+
+      if (fb) {
+        document.getElementById('fb-link').href = fb;
+        document.getElementById('fb-link').classList.remove('hidden');
+      }
+      if (ig) {
+        document.getElementById('ig-link').href = `https://instagram.com/${ig.replace('@','')}`;
+        document.getElementById('ig-link').classList.remove('hidden');
+      }
+
+      alert("Profile updated successfully!");
+    }
+
+    // Modal control triggers
+    function openHostingModal() { document.getElementById('hosting-modal').classList.remove('hidden'); document.getElementById('hosting-modal').classList.add('flex'); }
+    function closeHostingModal() { document.getElementById('hosting-modal').classList.add('hidden'); document.getElementById('hosting-modal').classList.remove('flex'); }
+
+    function openControlGuideModal() { document.getElementById('control-guide-modal').classList.remove('hidden'); document.getElementById('control-guide-modal').classList.add('flex'); }
+    function closeControlGuideModal() { document.getElementById('control-guide-modal').classList.add('hidden'); document.getElementById('control-guide-modal').classList.remove('flex'); }
+
+    function openAuthModal() { document.getElementById('auth-modal').classList.remove('hidden'); document.getElementById('auth-modal').classList.add('flex'); }
+    function closeAuthModal() { document.getElementById('auth-modal').classList.add('hidden'); document.getElementById('auth-modal').classList.remove('flex'); }
+
+    function openSubModal() { document.getElementById('sub-modal').classList.remove('hidden'); document.getElementById('sub-modal').classList.add('flex'); }
+    function closeSubModal() { document.getElementById('sub-modal').classList.add('hidden'); document.getElementById('sub-modal').classList.remove('flex'); }
+
+    function processPayment() {
+      alert(`Payment of ₹${selectedPlan.price} processed successfully! Welcome to ${selectedPlan.name}.`);
+      document.getElementById('sub-badge').innerText = selectedPlan.name;
+      closeSubModal();
+    }
+
+    function selectPlan(name, price) {
+      selectedPlan = { name, price };
+    }
+
+    function toggleFollow(btn) {
+      if (btn.innerText === "Follow") {
+        btn.innerText = "Following";
+        btn.className = "px-3 py-1 bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold";
+      } else {
+        btn.innerText = "Follow";
+        btn.className = "px-3 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-xs font-semibold";
+      }
+    }
+
+    function copyAppUrl() {
+      const input = document.getElementById('app-live-url');
+      input.select();
+      document.execCommand('copy');
+      alert("App Link copied to clipboard!");
+    }
+
+    function downloadCode() {
+      const element = document.createElement('a');
+      const file = new Blob([document.documentElement.outerHTML], {type: 'text/html'});
+      element.href = URL.createObjectURL(file);
+      element.download = "index.html";
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    }
+  </script>
+</body>
+</html>
